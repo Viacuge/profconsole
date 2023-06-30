@@ -206,7 +206,12 @@ game:GetService('RunService').RenderStepped:Connect(function()
 	Pm.Text=pm
 end)
 function webImport(asset,scriptonly)
-	
+	local formatted=string.format('https://raw.githubusercontent.com/Viacuge/profconsole/%s',asset)
+	if(scriptonly)then
+		return game:HttpGet(formatted)
+	else
+		return loadstring(game:HttpGet(formatted))()
+	end
 end
 function Animate(button)
 	spawn(function()
@@ -279,7 +284,7 @@ DownloadFiles.MouseButton1Up:Connect(function()
 end)
 Start.MouseButton1Up:Connect(function()
 	Close()
-	loadstring()
+	loadstring(game:HttpGet('https://raw.githubusercontent.com/Viacuge/profconsole/main/ui/main.lua'))()
 end)
 Animate(DownloadFiles)
 Animate(Start)
