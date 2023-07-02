@@ -1,1 +1,1 @@
-{"Type":"Playlist","Name":"TheCoolest","Ids":["rbxassetid://8260658079"]}
+{"Type":"Script","PlaceWhere":"TheCoolest","Name":"PrintHello","Code":"print('Hello')"}
