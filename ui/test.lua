@@ -1017,7 +1017,6 @@ function UI:Window(title,HC)
 		end
 		return Tab
 	end
-	return Window
 	local btns={}
 	for _, v in pairs(ui.Frame.TabHolder:GetChildren()) do if(v:IsA('TextButton'))then table.insert(btns,v) end end
 	for _, v in pairs(btns) do
@@ -1031,5 +1030,6 @@ function UI:Window(title,HC)
 			TS:Create(v.BtnFocused,Info,{Size=UDim2.new(0,90,0,1),BackgroundTransparency=0}):Play()
 		end)
 	end
+	return Window
 end
 return UI
