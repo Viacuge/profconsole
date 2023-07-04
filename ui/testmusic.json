@@ -1,1 +1,0 @@
-{"Type":"Script","PlaceWhere":"TheCoolest","Name":"PrintHello","Code":"--[[äHelloäsuccessätestä]] task.wait(2) getgenv().test=false print('Hello')"}
