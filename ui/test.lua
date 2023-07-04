@@ -1,5 +1,3 @@
---// yess
---// part of a script hub im developing haha yess
 local UI={}
 local function GetUI()
 	local ScreenGui = Instance.new('ScreenGui')
