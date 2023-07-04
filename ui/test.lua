@@ -763,19 +763,6 @@ function UI:Window(title,HC)
 	local Info=TweenInfo.new(0.2,Enum.EasingStyle.Linear,Enum.EasingDirection.Out,0,false,0)
 	local Window={}
 	local ui=GetUI()
-	local btns={}
-	for _, v in pairs(ui.Frame.TabHolder:GetChildren()) do if(v:IsA('TextButton'))then table.insert(btns,v) end end
-	for _, v in pairs(btns) do
-		v.Text=v.Name
-		v.MouseButton1Up:Connect(function()
-			for _, v2 in pairs(btns) do
-				if(v2~=v)then
-					TS:Create(v2.BtnFocused,Info,{Size=UDim2.new(0,0,0,1),BackgroundTransparency=1}):Play()
-				end
-			end
-			TS:Create(v.BtnFocused,Info,{Size=UDim2.new(0,90,0,1),BackgroundTransparency=0}):Play()
-		end)
-	end
 	local function Drag()
 		local tween = game:GetService('TweenService')
 		local tweeninfo = TweenInfo.new(0.09,Enum.EasingStyle.Linear,Enum.EasingDirection.Out,0,false,0)
@@ -816,7 +803,7 @@ function UI:Window(title,HC)
 		end)
 	end
 	local temps=ui.Frame.Templates
-	ui.Frame.TextLabel.Text=title
+	for _, v in pairs(ui:GetDescendants()) do if(v:IsA('TextLabel')and(v.Text=='Testing'))then v.Text=title end end
 	local function Close()
 		for _, v in pairs(ui.Frame:GetDescendants()) do
 			if(v.Parent~=ui.Frame)and(v.Name~='TextLabel')or(v.Name~='Close')or(v.Name~='Frame')then
@@ -1033,5 +1020,18 @@ function UI:Window(title,HC)
 		return Tab
 	end
 	return Window
+	local btns={}
+	for _, v in pairs(ui.Frame.TabHolder:GetChildren()) do if(v:IsA('TextButton'))then table.insert(btns,v) end end
+	for _, v in pairs(btns) do
+		v.Text=v.Name
+		v.MouseButton1Up:Connect(function()
+			for _, v2 in pairs(btns) do
+				if(v2~=v)then
+					TS:Create(v2.BtnFocused,Info,{Size=UDim2.new(0,0,0,1),BackgroundTransparency=1}):Play()
+				end
+			end
+			TS:Create(v.BtnFocused,Info,{Size=UDim2.new(0,90,0,1),BackgroundTransparency=0}):Play()
+		end)
+	end
 end
 return UI
