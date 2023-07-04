@@ -1,5 +1,5 @@
 --// yess
---// part of a script hub im developing
+--// part of a script hub im developing haha yess
 local UI={}
 local function GetUI()
 	local ScreenGui = Instance.new('ScreenGui')
@@ -112,9 +112,9 @@ local function GetUI()
 	local UICorner_35 = Instance.new('UICorner')
 	local BtnFocused = Instance.new('Frame')
 	local UIGradient = Instance.new('UIGradient')
+	local UICorner_3 = Instance.new('UICorner')
 	
-	ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild('PlayerGui')
-	ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+	ScreenGui.Parent = game.CoreGui
 	
 	Frame.Parent = ScreenGui
 	Frame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
@@ -763,6 +763,58 @@ function UI:Window(title,HC)
 	local Info=TweenInfo.new(0.2,Enum.EasingStyle.Linear,Enum.EasingDirection.Out,0,false,0)
 	local Window={}
 	local ui=GetUI()
+	local btns={}
+	for _, v in pairs(ui.Frame.TabHolder:GetChildren()) do if(v:IsA('TextButton'))then table.insert(btns,v) end end
+	for _, v in pairs(btns) do
+		v.Text=v.Name
+		v.MouseButton1Up:Connect(function()
+			for _, v2 in pairs(btns) do
+				if(v2~=v)then
+					TS:Create(v2.BtnFocused,Info,{Size=UDim2.new(0,0,0,1),BackgroundTransparency=1}):Play()
+				end
+			end
+			TS:Create(v.BtnFocused,Info,{Size=UDim2.new(0,90,0,1),BackgroundTransparency=0}):Play()
+		end)
+	end
+	local function Drag()
+		local tween = game:GetService('TweenService')
+		local tweeninfo = TweenInfo.new(0.09,Enum.EasingStyle.Linear,Enum.EasingDirection.Out,0,false,0)
+		local frame=ui.Frame
+		local dragging = false
+		local dragInput, mousePos, framePos
+		local input=game:GetService('UserInputService')
+		
+		frame.InputBegan:Connect(function(input)
+			if input.UserInputType == Enum.UserInputType.MouseButton1 then
+				dragging = true
+				mousePos = input.Position
+				framePos = ui.Frame.Position
+		
+				input.Changed:Connect(function()
+					if input.UserInputState == Enum.UserInputState.End then
+						dragging = false
+					end
+				end)
+			end
+		end)
+		
+		frame.InputChanged:Connect(function(input)
+			if input.UserInputType == Enum.UserInputType.MouseMovement then
+				dragInput = input
+			end
+		end)
+		
+		input.InputChanged:Connect(function(input)
+			if input == dragInput and dragging then
+				local delta = input.Position - mousePos
+				tween:Create(ui.Frame,tweeninfo,{Position=UDim2.new(framePos.X.Scale, framePos.X.Offset + delta.X, framePos.Y.Scale, framePos.Y.Offset + delta.Y)}):Play()
+			end
+		end)
+		local pos=ui.Frame.TabHolder.Position
+		game:GetService('RunService').RenderStepped:Connect(function()
+			ui.Frame.TabHolder.Position=pos
+		end)
+	end
 	local temps=ui.Frame.Templates
 	ui.Frame.TextLabel.Text=title
 	local function Close()
