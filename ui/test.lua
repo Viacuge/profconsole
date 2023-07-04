@@ -1,3 +1,5 @@
+--// yess
+--// part of a script hub im developing
 local UI={}
 local function GetUI()
 	local ScreenGui = Instance.new('ScreenGui')
@@ -765,7 +767,7 @@ function UI:Window(title,HC)
 	ui.Frame.TextLabel.Text=title
 	local function Close()
 		for _, v in pairs(ui.Frame:GetDescendants()) do
-			if(v.Parent~=ui.Frame)and(v.Name~='TextLabel')or(v.Name~'Close')or(v.Name~='Frame')then
+			if(v.Parent~=ui.Frame)and(v.Name~='TextLabel')or(v.Name~='Close')or(v.Name~='Frame')then
 				pcall(function()
 					spawn(function()
 						for x=0,1,0.2 do
@@ -778,7 +780,7 @@ function UI:Window(title,HC)
 		end
 		repeat task.wait() until ui.Frame.Test.BackgroundTransparency==1
 		for _, v in pairs(ui.Frame:GetDescendants()) do
-			if(v.Parent~=ui.Frame)and(v.Name~='TextLabel')or(v.Name~'Close')or(v.Name~='Frame')then
+			if(v.Parent~=ui.Frame)and(v.Name~='TextLabel')or(v.Name~='Close')or(v.Name~='Frame')then
 				v:Destroy()
 			end
 		end
